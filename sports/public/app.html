@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html ng-app="sportsStore">
+<head>
+    <title>SportsStore</title>
+    <script src="angular.js"></script>
+    <link href="bootstrap.css" rel="stylesheet" />
+    <link href="bootstrap-theme.css" rel="stylesheet" />
+    <script>
+        angular.module("sportsStore", ["customFilters", "cart", "ngRoute"])
+        .config( function ($routeProvider) {
+            $routeProvider.when("/checkout", {
+                templateUrl: "/views/checkoutSummary.html"
+            })
+            .when("/products", {
+                templateUrl: "/views/listaDeProductos.html"
+            })
+            .when("/placeorder", {
+                templateUrl: "/views/placeOrder.html"
+            })
+            .when("/complete", {
+                templateUrl: "/views/thankYou.html"
+            })
+            .otherwise({
+                templateUrl: "/views/listaDeProductos.html"
+            });
+        });
+    </script>
+    <script src="controllers/sportsStore.js"></script>
+    <script src="filters/customFilters.js"></script>
+    <script src="controllers/productListControllers.js"></script>
+    <script src="components/cart/cart.js"></script>
+    <script src="ngmodules/angular-route.js"></script>
+    <script src="controllers/checkoutController.js"></script>
+</head>
+<body ng-controller="sportsStoreCtrl">
+    <div class="navbar navbar-inverse">
+        <a class="navbar-brand" href="#">SPORTS STORE</a>
+        <cart-summary />
+    </div>
+    <div class="alert alert-danger" ng-show="data.error">
+        Error ( {{data.error.status}} ). El producto no se ha cargado.
+        <a href="/index.html">Intentelo de nuevo.</a>
+    </div>
+    <div class="panel panel-default row" ng-controller="productListCtrl" style="border: 0 solid white;"
+          ng-hide="data.error">
+        <div class="col-xs-2">
+            <a ng-click="selectCategory()"
+               class="btn btn-block btn-default btn-lg">Home</a>
+            <a ng-repeat="item in data.products | orderBy:'category' | unique:'category'"
+               ng-click="selectCategory(item)" class=" btn btn-block btn-default btn-lg"
+               ng-class="getCategoryClass(item)">
+                {{item}}
+            </a>
+        </div>
+        <ng-view />
+    </div>
+</body>
+</html>
