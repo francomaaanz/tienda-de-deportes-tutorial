@@ -7,8 +7,8 @@ angular.module("sportsStore")
     $scope.data = {};
 
     $http.get(dataUrl)
-        .sucess(function (data) {
-            $scope.data.productos = data;
+        .success(function (data) {
+            $scope.data.products = data;
         })
         .error(function (error) {
             $scope.data.error = error;

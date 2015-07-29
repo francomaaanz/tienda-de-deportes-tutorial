@@ -1,0 +1,45 @@
+<div class="lead" ng-controller="cartSummaryController">
+	
+	<div class="col-lg-offset-3">
+		<div class="alert alert-warning" ng-show="cartData.lenght == 0">
+			No hay productos en el carrito de compras.
+			<a href="#/products" class="btn btn-primary">Volver al caralogo</a>	
+		</div>
+	</div>
+	<div class="col-lg-offset-1 col-lg-5">
+		<div ng-hide="cartData.lenght == 0">
+			<table class="table">
+				<thead>
+					<th>Cantidad</th>
+					<th>Items</th>
+					<th class="text-right">Precio</th>
+					<th class="text-right">Subtotal</th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in cartData">
+						<td class="text-center">{{item.count}}</td>
+						<td class="text-left">{{item.name}}</td>
+						<td class="text-right">{{item.price | currency}}</td>
+						<td class="text-right">{{(item.price * item.count) | currency}}</td>
+						<td>
+							<button 
+							class="btn btn-danger btn-sm"
+							ng-click="remove(item.id)">Remove</button>
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="3" class="text-right">Total:</td>
+						<td class="text-right">{{total() | currency}}</td>
+						<td></td>
+					</tr>
+				</tfoot>
+			</table>
+			<div>
+				<a class="btn btn-primary" href="#/products">Continuar comprando</a>
+				<a class="btn btn-primary" href="#/placeorder">Place order now</a>
+			</div>
+		</div>
+	</div>
+</div>
